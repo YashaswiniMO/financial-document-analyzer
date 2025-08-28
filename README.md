@@ -86,69 +86,77 @@ This project is a CrewAI-powered financial document analyzer that performs:
 git clone https://github.com/your-username/financial-document-analyzer.git
 cd financial-document-analyzer
 
-2. **Create Python environment**
-
+### 1. Clone Repository
+```bash
+git clone https://github.com/your-username/financial-document-analyzer.git
+cd financial-document-analyzer
+2. Create Python Environment
+bash
+Copy code
 python -m venv venv
-source venv/bin/activate  # Linux/macOS
-venv\Scripts\activate     # Windows
-
-
-3. **Install dependencies**
-
+# Linux/macOS
+source venv/bin/activate
+# Windows
+venv\Scripts\activate
+3. Install Dependencies
+bash
+Copy code
 pip install -r requirements.txt
+4. Configure API Keys
+Create a .env file in the root directory:
 
-
-3. **Configure API keys**
-
-Set your CrewAI / OpenAI API key in .env:
-
+ini
+Copy code
 CREWAI_API_KEY=your_api_key_here
-
-
-4. **Run FastAPI server**
-
+5. Run FastAPI Server
+bash
+Copy code
 uvicorn main:app --reload
+The server will start at:
+👉 http://127.0.0.1:8000
 
+📌 Usage Instructions
+1. Synchronous Analysis (/analyze)
+Upload PDF via POST /analyze
 
-Server will start at: http://127.0.0.1:8000
+Optional query parameter
 
-5. **Usage Instructions**
-1. **Synchronous Analysis (/analyze)**
+Returns structured JSON
 
-Upload PDF via POST /analyze.
+Example Response:
 
-Optional query specifying analysis instructions.
-
-Returns JSON with:
-
+json
+Copy code
 {
   "metrics": {...},
   "risks": [...],
   "recommendations": [...],
   "market_insights": [...]
 }
-
-
 Example cURL:
 
+bash
+Copy code
 curl -X POST "http://127.0.0.1:8000/analyze" \
 -F "file=@TSLA-Q2-2025-Update.pdf" \
 -F "query=Extract metrics, risks, recommendations, and market insights"
+2. Asynchronous Analysis (/analyze_async)
+Handles concurrent requests via Celery + Redis
 
-2. **Asynchronous Analysis (/analyze_async)**
+Returns a task ID immediately
 
-Handles concurrent requests via Celery + Redis.
+Example Response:
 
-Returns a task ID immediately:
-
+json
+Copy code
 {
   "task_id": "a1b2c3d4e5",
   "status": "Processing"
 }
+Check status:
 
-
-Check status with /task_status/{task_id}:
-
+json
+Copy code
 {
   "task_id": "a1b2c3d4e5",
   "status": "SUCCESS",
@@ -159,37 +167,49 @@ Check status with /task_status/{task_id}:
     "market_insights": [...]
   }
 }
+📖 API Documentation
+Endpoint	Method	Description
+/analyze	POST	Upload PDF and get immediate analysis
+/analyze_async	POST	Upload PDF, process asynchronously
+/task_status/{task_id}	GET	Check status & retrieve async results
 
-**API Documentation📖**
-Endpoint	| Method	| Description
-/analyze	| POST	| Upload PDF and get immediate analysis
-/analyze_async	| POST	| Upload PDF, process asynchronously, return task ID
-/task_status/{task_id}	| GET	| Check status and retrieve async results
-
-**Bonus Features🎯**
+🎯 Bonus Features
 1. Queue Worker Model
+Celery + Redis for concurrent request handling
 
-Celery + Redis handles concurrent requests.
-
-FastAPI pushes tasks to Celery; workers execute CrewAI agents.
+FastAPI pushes tasks → Celery workers execute CrewAI agents
 
 2. Database Integration
+Stores analysis results, user data, file metadata
 
-Stores analysis results, user data, and file metadata.
+Recommended: PostgreSQL/MySQL via SQLAlchemy
 
-Recommended: SQLite via SQLAlchemy.
-
-**Running Bonus Features**
-
-1. Start Redis server.
-
-2. Start Celery worker:
-
+▶️ Running Bonus Features
+Start Redis
+bash
+Copy code
+redis-server
+Start Celery Worker
+bash
+Copy code
 celery -A celery_worker worker --loglevel=info
+Start FastAPI Server
+bash
+Copy code
+uvicorn main:app --reload
+Now you can:
 
+Use /analyze_async for large-scale processing
 
-3. Start FastAPI server.
+Results will be stored in the database and retrievable via task ID
 
-Use /analyze_async endpoint.
+✅ Expected Features
+Upload financial documents (PDF format)
 
-Results stored in database and retrievable via task ID or DB query.
+AI-powered financial analysis
+
+Investment recommendations
+
+Risk assessment
+
+Market insights
