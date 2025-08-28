@@ -50,23 +50,29 @@ This project performs:
 | Cleanup timing | File deleted before task completion | Delete file in background after processing |
 | Generic default query | Vague prompt wastes tokens | Replaced with structured, scoped default query |
 
-### agents.py
-- **Fixed LLM initialization** (`LLM(model="gpt-4", temperature=0.2)`)  
-- **Corrected tool argument** (`tools=[...]`)  
-- **Rewrote prompts** (evidence-based, compliance-friendly)  
-- **Added memory** (`memory=True`)  
+### `agents.py`
+| Bug | Explanation | Fix |
+|-----|-------------|-----|
+| LLM undefined | `llm = llm` causes NameError | Properly load LLM: `LLM(model="gpt-4", temperature=0.2)` |
+| Wrong argument `tool` | Should be `tools=[...]` | Fixed argument name |
+| Unrealistic prompts | Encouraged hallucinations | Rewrote prompts: focused, evidence-based, compliance-friendly |
+| Missing memory | Multi-turn tasks inconsistent | Added `memory=True` to all agents |
 
-### task.py
-- Assigned **correct agents** per task (verifier, investment_advisor, risk_assessor)  
-- Matched tools selectively (not all tasks use `read_data_tool`)  
-- Rewrote structured, realistic prompts  
+### `task.py`
+| Bug | Explanation | Fix |
+|-----|-------------|-----|
+| Wrong agent usage | All tasks tied to `financial_analyst` | Assigned each task to correct agent |
+| Tools mismatch | Every task used `read_data_tool` | Assigned tools selectively |
+| Bad prompt instructions | Encouraged hallucination | Rewritten structured, realistic instructions with expected output |
 
-### tools.py
-- Fixed **PDF import** (`from crewai_tools import PDFReaderTool`)  
-- Fixed async mismatches  
-- Optimized whitespace cleanup (`" ".join(processed_data.split())`)  
-- Added structured **investment/risk placeholder tools**  
-- Standardized naming conventions  
+### `tools.py`
+| Bug | Explanation | Fix |
+|-----|-------------|-----|
+| PDF not imported | `Pdf(file_path=path).load()` fails | Imported correct PDF reader (`from crewai_tools import PDFReaderTool`) |
+| Async mismatch | Async tool not awaited | Converted to sync methods or properly awaited |
+| Inefficient whitespace cleanup | O(n²) loop | Replaced with `" ".join(processed_data.split())` |
+| Placeholder tools | Unimplemented investment/risk tools | Added structured placeholder outputs |
+| Naming conventions | Inconsistent | Updated to match CrewAI callable tool conventions |
 
 ---
 
