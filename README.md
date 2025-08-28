@@ -74,36 +74,35 @@ This project is a **CrewAI-powered financial document analyzer** that performs:
 
 ## ⚙️ Setup & Installation
 
-### 1️⃣ Clone repository
+ 1️⃣ Clone repository
 ```bash
 git clone https://github.com/your-username/financial-document-analyzer.git
 cd financial-document-analyzer
-2️⃣ Create Python environment
-bash
-Copy code
+### 2️⃣ Create Python environment
+'''bash
 python -m venv venv
 # Linux/macOS
 source venv/bin/activate
 # Windows
 venv\Scripts\activate
-3️⃣ Install dependencies
+### 3️⃣ Install dependencies
 bash
 Copy code
 pip install -r requirements.txt
-4️⃣ Configure API keys
+### 4️⃣ Configure API keys
 Set your CrewAI / OpenAI API key in .env:
 
 env
 Copy code
 CREWAI_API_KEY=your_api_key_here
-5️⃣ Run FastAPI server
+### 5️⃣ Run FastAPI server
 bash
 Copy code
 uvicorn main:app --reload
 Server will start at:
 👉 http://127.0.0.1:8000
 
-📌 Usage Instructions
+**📌 Usage Instructions
 🔹 1. Synchronous Analysis (/analyze)
 Upload PDF via POST /analyze.
 
