@@ -33,7 +33,7 @@ This project performs:
 - **Backend:** Python, FastAPI  
 - **Agents & AI:** CrewAI (LLM agents)  
 - **Tools:** PDFReader, custom Financial/Investment/Risk Tools  
-- **Database:** PostgreSQL/MySQL via SQLAlchemy  
+- **Database:** SQLite via SQLAlchemy  
 - **Concurrency:** Celery + Redis for async task handling  
 
 ---
@@ -215,4 +215,9 @@ uvicorn main:app --reload
 ---
 
 
-Market insights
+## 📚 Resources
+- [ChatGPT](https://chatgpt.com/)
+- [CrewAI Documentation](https://docs.crewai.com/)  
+- [FastAPI Docs](https://fastapi.tiangolo.com/)  
+- [Celery Docs](https://docs.celeryq.dev/)  
+- [SQLAlchemy Docs](https://docs.sqlalchemy.org/) 
