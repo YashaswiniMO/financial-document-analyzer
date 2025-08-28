@@ -4,7 +4,7 @@ import uuid
 from dotenv import load_dotenv
 import logging
 
-from celery_app import celery_app        # ✅ import the Celery app directly
+from celery_app import celery_app        
 from celery_worker import analyze_document_task
 from celery.result import AsyncResult
 from litellm import RateLimitError
@@ -72,7 +72,7 @@ async def analyze_document(
 @app.get("/result/{task_id}")
 def get_result(task_id: str):
     """Check status or get result of an analysis task"""
-    task_result = AsyncResult(task_id, app=celery_app)   # ✅ use celery_app, not analyze_document_task.app
+    task_result = AsyncResult(task_id, app=celery_app)   
     if task_result.state == "PENDING":
         return {"status": "pending"}
     elif task_result.state == "SUCCESS":

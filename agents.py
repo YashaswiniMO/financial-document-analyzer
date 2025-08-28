@@ -4,7 +4,6 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from crewai import Agent, LLM
-# ✅ Import correct tools
 from tools import search_tool, read_data_tool, analyze_investment_tool, create_risk_assessment_tool
 
 # Load LLM
@@ -22,7 +21,7 @@ financial_analyst = Agent(
         "earnings reports and market trends. You focus on accuracy, regulatory compliance, "
         "and actionable insights. Your role is to provide clear and structured recommendations."
     ),
-    tools=[read_data_tool, analyze_investment_tool],   # ✅ Use your defined tools
+    tools=[read_data_tool, analyze_investment_tool],   
     llm=llm,
     max_iter=2,
     max_rpm=2,
@@ -40,7 +39,7 @@ verifier = Agent(
         "is a legitimate financial report (PDF, annual report, quarterly filing) and validate "
         "the structure before further analysis."
     ),
-    tools=[read_data_tool],   # ✅ Document verifier should at least use the reader
+    tools=[read_data_tool],   
     llm=llm,
     max_iter=1,
     max_rpm=1,
@@ -59,7 +58,7 @@ investment_advisor = Agent(
         "portfolio management, and compliance. Your responsibility is to recommend structured "
         "investment strategies aligned with risk profile and financial performance."
     ),
-    tools=[analyze_investment_tool],   # ✅ Give the advisor the analysis tool
+    tools=[analyze_investment_tool],   
     llm=llm,
     max_iter=2,
     max_rpm=2,
@@ -78,7 +77,7 @@ risk_assessor = Agent(
         "and credit assessment. You evaluate financial documents objectively, categorizing risks "
         "into low, medium, or high, and providing mitigation strategies."
     ),
-    tools=[create_risk_assessment_tool],   # ✅ Give the risk assessor the risk tool
+    tools=[create_risk_assessment_tool],   
     llm=llm,
     max_iter=2,
     max_rpm=2,

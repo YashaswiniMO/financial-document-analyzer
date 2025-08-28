@@ -1,12 +1,12 @@
 import os
 from dotenv import load_dotenv
-from crewai.tools import tool           # <-- FIX: tool comes from crewai.tools
-from crewai_tools import SerperDevTool  # <-- SerperDevTool is correct here
+from crewai.tools import tool           
+from crewai_tools import SerperDevTool  
 from langchain_community.document_loaders import PyPDFLoader
 
 load_dotenv()
 
-# Create search tool (already a Tool from crewai_tools)
+
 search_tool = SerperDevTool()
 
 # ---- PDF Reader Tool ----

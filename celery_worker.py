@@ -1,8 +1,8 @@
 # celery_worker.py
 import os
-from celery_app import celery_app   # ✅ import from celery_app instead of defining here
+from celery_app import celery_app   
 from database import SessionLocal, AnalysisResult
-from crew_runner import run_crew     # ✅ move run_crew out of main.py
+from crew_runner import run_crew     
 
 @celery_app.task(bind=True)
 def analyze_document_task(self, file_path: str, query: str, file_name: str = ""):
